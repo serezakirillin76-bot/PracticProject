@@ -176,15 +176,20 @@ class MathParser {
                 }
                 TokenType.LPAREN -> ops.add(t)
                 TokenType.RPAREN -> {
-                    if (ops.isNotEmpty() && ops.last().type == TokenType.LPAREN) {
-                        throw IllegalArgumentException("Пустые скобки")
-                    }
+
+                    var foundContent = false
+
                     while (ops.isNotEmpty() && ops.last().value != "(") {
+                        foundContent = true
                         output.add(ops.removeAt(ops.size - 1))
                     }
 
                     if (ops.isEmpty()) {
                         throw IllegalArgumentException("Скобки расставлены неверно")
+                    }
+
+                    if (!foundContent && output.isEmpty()) {
+                        throw IllegalArgumentException("Пустые скобки")
                     }
 
                     ops.removeAt(ops.size - 1)
