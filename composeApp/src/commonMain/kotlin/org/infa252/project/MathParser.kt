@@ -425,6 +425,13 @@ class MathParser {
         }
 
         s = sb.toString()
+        // Handle powers: a^{b} -> a^(b)
+        while (s.contains("^{")) {
+            val start = s.indexOf("^{")
+            val power = getBalancedContent(s, start + 1, '{', '}') ?: break
+
+            s = s.substring(0, start) + "^(" + power.first + ")" + s.substring(power.second + 1)
+        }
 
         // 5. Replace remaining {} and []
         s = s.replace("{", "(").replace("}", ")").replace("[", "(").replace("]", ")")
