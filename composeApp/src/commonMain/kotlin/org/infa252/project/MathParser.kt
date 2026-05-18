@@ -438,6 +438,15 @@ class MathParser {
 
             s = s.substring(0, start) + "^(" + power.first + ")" + s.substring(power.second + 1)
         }
+        // Remove subscripts: x_{1} -> x
+        while (s.contains("_{")) {
+            val start = s.indexOf("_{")
+            val sub = getBalancedContent(s, start + 1, '{', '}') ?: break
+
+            s = s.substring(0, start) + s.substring(sub.second + 1)
+        }
+        // Remove simple subscripts: x_1 -> x
+        s = s.replace(Regex("_[a-zA-Z0-9]+"), "")
 
         // 5. Replace remaining {} and []
         s = s.replace("{", "(").replace("}", ")").replace("[", "(").replace("]", ")")
