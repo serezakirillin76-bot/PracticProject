@@ -173,6 +173,9 @@ class MathParser {
             }
         }
         while (ops.isNotEmpty()) {
+            if (ops.last().type == TokenType.LPAREN || ops.last().type == TokenType.RPAREN) {
+                throw IllegalArgumentException("Скобки расставлены неверно")
+            }
             output.add(ops.removeAt(ops.size - 1))
         }
         return output
