@@ -153,7 +153,13 @@ class MathParser {
                     while (ops.isNotEmpty() && ops.last().value != "(") {
                         output.add(ops.removeAt(ops.size - 1))
                     }
-                    if (ops.isNotEmpty()) ops.removeAt(ops.size - 1)
+
+                    if (ops.isEmpty()) {
+                        throw IllegalArgumentException("Скобки расставлены неверно")
+                    }
+
+                    ops.removeAt(ops.size - 1)
+
                     if (ops.isNotEmpty() && ops.last().type == TokenType.FUNCTION) {
                         output.add(ops.removeAt(ops.size - 1))
                     }
