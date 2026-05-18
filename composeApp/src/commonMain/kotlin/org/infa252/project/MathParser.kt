@@ -40,6 +40,12 @@ class MathParser {
             if (c == '-' && expectNumber) {
                 val sb = StringBuilder("-")
                 i++
+                if (i < s.length && s[i] == '(') {
+                    tokens.add(Token(TokenType.NUMBER, "0"))
+                    tokens.add(Token(TokenType.OP, "-"))
+                    expectNumber = true
+                    continue
+                }
                 while (i < s.length && (s[i].isDigit() || s[i] == '.')) {
                     sb.append(s[i++])
                 }
