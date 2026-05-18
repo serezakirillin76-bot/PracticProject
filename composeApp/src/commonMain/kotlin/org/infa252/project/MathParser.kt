@@ -443,9 +443,18 @@ class MathParser {
 
         // 6. Final cleanup of LaTeX commands
         return s.replace("\\", "")
-            .replace("asin", "asin") // ensure correct names for parser
-            .replace("acos", "acos")
-            .replace("atan", "atan")
+            .replace("\\arcsin", "asin")
+            .replace("\\arccos", "acos")
+            .replace("\\arctan", "atan")
+            .replace("\\sin^{-1}", "asin")
+            .replace("\\cos^{-1}", "acos")
+            .replace("\\tan^{-1}", "atan")
+            .replace("\\sinh", "sinh")
+            .replace("\\cosh", "cosh")
+            .replace("\\tanh", "tanh")
+            .replace("\\sin", "sin")
+            .replace("\\cos", "cos")
+            .replace("\\tan", "tan")
     }
 
     fun evaluate(expression: String, variables: Map<String, String> = emptyMap()): String {
