@@ -335,6 +335,7 @@ class MathParser {
             .replace("\\log_{2}", "log2")
             .replace("\\ln", "ln")
             .replace("\\log", "log")
+            .replace("\\exp", "exp")
             .replace("\\floor", "floor")
             .replace("\\ceil", "ceil")
             .replace("\\round", "round")
