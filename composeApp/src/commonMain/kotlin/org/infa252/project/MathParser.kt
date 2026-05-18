@@ -123,6 +123,7 @@ class MathParser {
                 prev.type == TokenType.RPAREN && curr.type == TokenType.LPAREN -> true
                 prev.type == TokenType.POSTFIX && curr.type == TokenType.NUMBER -> true
                 prev.type == TokenType.POSTFIX && curr.type == TokenType.VARIABLE -> true
+                (prev.type == TokenType.OP && prev.value == "%") && (curr.type == TokenType.LPAREN || curr.type == TokenType.VARIABLE) -> true
                 else -> false
             }
 
