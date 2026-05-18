@@ -10,7 +10,7 @@ class MathParser {
         "sqrt", "sin", "cos", "tan", "ln", "log", "asin", "acos", "atan", "abs", "exp",
         "sinh", "cosh", "tanh" -> 4
         "^" -> 3
-        "*", "/" -> 2
+        "*", "/", "%" -> 2
         "+", "-" -> 1
         else -> 0
     }
@@ -86,7 +86,7 @@ class MathParser {
                     tokens.add(Token(TokenType.VARIABLE, name))
                     expectNumber = false
                 }
-            } else if ("+-*/^()!".contains(c)) {
+            } else if ("+-*/%^()!".contains(c)) {
                 val type = when (c) {
                     '(' -> TokenType.LPAREN
                     ')' -> TokenType.RPAREN
