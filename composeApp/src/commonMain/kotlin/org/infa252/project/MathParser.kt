@@ -326,6 +326,8 @@ class MathParser {
             .replace("\\sin", "sin")
             .replace("\\cos", "cos")
             .replace("\\tan", "tan")
+            .replace("\\log_{10}", "log10")
+            .replace("\\log_{2}", "log2")
             .replace("\\ln", "ln")
             .replace("\\log", "log")
             .replace("\\floor", "floor")
@@ -345,11 +347,32 @@ class MathParser {
             .replace("\\right|", "|")
 
         // 0. Handle \log_{base}{value} -> log(base, value)
+
         while (s.contains("\\log_{")) {
             val start = s.indexOf("\\log_{")
             val basePart = getBalancedContent(s, start + 5, '{', '}') ?: break
             val valPart = getBalancedContent(s, basePart.second + 1, '{', '}') ?: break
             s = s.substring(0, start) + "log(${basePart.first}, ${valPart.first})" + s.substring(valPart.second + 1)
+        }
+        // Handle \log_{10}{x} and \log_{2}{x} already covered by \log_{base}{value}
+// Handle log10(x) -> log(10, x)
+        while (s.contains("log10")) {
+            val start = s.indexOf("log10")
+            val content = getBalancedContent(s, start + 5, '(', ')')
+                ?: getBalancedContent(s, start + 5, '{', '}')
+                ?: break
+
+            s = s.substring(0, start) + "log(10, ${content.first})" + s.substring(content.second + 1)
+        }
+
+// Handle log2(x) -> log(2, x)
+        while (s.contains("log2")) {
+            val start = s.indexOf("log2")
+            val content = getBalancedContent(s, start + 4, '(', ')')
+                ?: getBalancedContent(s, start + 4, '{', '}')
+                ?: break
+
+            s = s.substring(0, start) + "log(2, ${content.first})" + s.substring(content.second + 1)
         }
 
         // 1. Handle \sqrt[n]{x} -> root(x, n)
