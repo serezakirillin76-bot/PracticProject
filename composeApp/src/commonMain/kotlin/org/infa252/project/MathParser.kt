@@ -86,6 +86,26 @@ class MathParser {
                     tokens.add(Token(TokenType.VARIABLE, name))
                     expectNumber = false
                 }
+            } else if (c == '|') {
+                tokens.add(Token(TokenType.FUNCTION, "abs"))
+                tokens.add(Token(TokenType.LPAREN, "("))
+                i++
+
+                val sb = StringBuilder()
+                while (i < s.length && s[i] != '|') {
+                    sb.append(s[i])
+                    i++
+                }
+
+                tokens.addAll(tokenize(sb.toString()))
+
+                tokens.add(Token(TokenType.RPAREN, ")"))
+
+                if (i < s.length && s[i] == '|') {
+                    i++
+                }
+
+                expectNumber = false
             } else if ("+-*/%^()!".contains(c)) {
                 val type = when (c) {
                     '(' -> TokenType.LPAREN
