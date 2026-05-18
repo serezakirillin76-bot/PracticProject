@@ -405,6 +405,7 @@ class MathParser {
         // 4. Replace |x| with abs(x)
         val sb = StringBuilder()
         var openAbs = false
+
         for (char in s) {
             if (char == '|') {
                 if (!openAbs) {
@@ -418,6 +419,11 @@ class MathParser {
                 sb.append(char)
             }
         }
+
+        if (openAbs) {
+            throw IllegalArgumentException("Модуль не закрыт")
+        }
+
         s = sb.toString()
 
         // 5. Replace remaining {} and []
